@@ -1,5 +1,6 @@
 function Hashmap(){};
 
+console.log(Hashmap.prototype);
 Hashmap.prototype.put = function(StringKey, StringValue) {
     this[StringKey] = StringValue;
 }
@@ -52,6 +53,7 @@ map.put("a", 4);
 
 console.log(Object.keys(map))
 console.log(map);
+
 // 중복 방지 알고리즘.
 
 // for(let i = 0; i < Object.keys(map).length-1; i++) {
