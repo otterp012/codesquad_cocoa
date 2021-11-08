@@ -44,16 +44,6 @@ Hashmap.prototype.clear = function() {
         delete this[StringKey];
     }
 }
-
-const map = new Hashmap();
-map.put("a", 1);
-map.put("b", 2);
-map.put("c", 3);
-map.put("a", 4);
-
-console.log(Object.keys(map))
-console.log(map);
-
 // 중복 방지 알고리즘.
 
 // for(let i = 0; i < Object.keys(map).length-1; i++) {
@@ -73,10 +63,33 @@ console.log(map);
 // 만들어 두는 것이, 중복을 방지 하기 위해 효과적이라 생각함.
 // 결과적으로 put을 살짝 바꾸어주어,
 
+// 1) key 이름
 Hashmap.prototype.put = function(StringKey, StringValue) {
     if(!this.containKey(StringKey)){
         this[StringKey] = StringValue;
+    } else {
+        this[StringKey+"2"] = StringValue;
+    }
+}
+
+// 중복이면 중복 name에 2를 더해줌
+// a가 이미 있을경우 a2에 data가 저장됨.
+
+const map = new Hashmap();
+map.put("a", 1);
+map.put("b", 2);
+map.put("c", 3);
+map.put("a", 4);
+map.put("a", 3);
+console.log(Object.keys(map))
+console.log(map);
+
+
+// 2) 그냥 오류처리
+Hashmap.prototype.put = function(StringKey, StringValue) {
+    if(!this.containKey(StringKey)){
+        this[StringKey+"2"] = StringValue;
     } else console.error("중복입니다");
 }
 
-// key가 같은 값이 추가되면 중복이라는 오류메세지 출력됨.
+key가 같은 값이 추가되면 중복이라는 오류메세지 출력됨.
