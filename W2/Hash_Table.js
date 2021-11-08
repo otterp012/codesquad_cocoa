@@ -1,28 +1,3 @@
-
-// const obj = {};
-
-// obj.prototype.put = function(StringKey, StringValue) {
-//     obj.StringKey = obj.StringValue;
-// }
-
-// obj.prototype.put = f()
-//  Cannot set properties of undefined (setting 'put')
-// 값을 설정할 수 없는 오류
-// prototype가 없어서 . .?
-// prototype을 사용하려면, 생성자 함수가 있어야하는데, 생성자함수강벗으니까..!
-
-// 빈 객체 확인
-// https://hianna.tistory.com/462
-
-// 2번째오류
-
-// Object.prototype.put = function(StringKey, StringValue) {
-//     this.StringKey = StringValue;
-// }
-// StringKey 값을 받아오는게 아니고, Stringkey = StringValue가 나옴
-// {StringKey : 2 } 이런식
-// -> 대괄호표기법으로 바꿈
-
 function Hashmap(){};
 
 Hashmap.prototype.put = function(StringKey, StringValue) {
@@ -64,10 +39,42 @@ Hashmap.prototype.size = function() {
 }
 
 Hashmap.prototype.clear = function() {
-    for(const property in this) {
-        delete this[property];
+    for(const StringKey in this) {
+        delete this[StringKey];
     }
 }
 
+const map = new Hashmap();
+map.put("a", 1);
+map.put("b", 2);
+map.put("c", 3);
+map.put("a", 4);
 
+console.log(Object.keys(map))
+console.log(map);
 // 중복 방지 알고리즘.
+
+// for(let i = 0; i < Object.keys(map).length-1; i++) {
+//     for(let j = 1; i < Object.keys(map).length; j++) {
+//         if(map[i] === map[j]) {
+//             console.log("중복입니다");
+//             map.remove(map[i]);
+//             break;
+//         };
+//     }
+// }
+// 원래 이중for문으로 모든 요소들을 비교하는 방법을 생각했으나,
+// 객체의 특성상 추가되면 다른 값으로 덮혀지거나, 하기때문에
+// 추후에 모든 요소를 비교하는 방법이 효과가 없을 것 같음.
+
+// 이런 점에서 객체는 동적으로 수정이 가능하므로, 입력을 할때에 제한조건을
+// 만들어 두는 것이, 중복을 방지 하기 위해 효과적이라 생각함.
+// 결과적으로 put을 살짝 바꾸어주어,
+
+Hashmap.prototype.put = function(StringKey, StringValue) {
+    if(!this.containKey(StringKey)){
+        this[StringKey] = StringValue;
+    } else console.error("중복입니다");
+}
+
+// key가 같은 값이 추가되면 중복이라는 오류메세지 출력됨.
