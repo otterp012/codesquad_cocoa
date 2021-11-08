@@ -23,69 +23,51 @@
 // {StringKey : 2 } 이런식
 // -> 대괄호표기법으로 바꿈
 
-Object.prototype.put = function(StringKey, StringValue) {
-    this[`${StringKey}`] = StringValue;
+function Hashmap(){};
+
+Hashmap.prototype.put = function(StringKey, StringValue) {
+    this[StringKey] = StringValue;
 }
 
-Object.prototype.remove = function(StringKey){
-    delete this[`${StringKey}`];
-}
-// a값 대신 StringKey 들어가면 오류남 - 오타였음 오타조심
-Object.prototype.containKey = function(StringKey) {
-    for(let key of Object.keys(this)) {
+Hashmap.prototype.remove = function(StringKey){
+    delete this[StringKey];
+} 
+
+Hashmap.prototype.containKey = function(StringKey) {
+    for(let key in this) {
         if(key === StringKey) return true;
         else return false;
     }
 }
-Object.prototype.get = function(StringKey) {
-    for(let key of Object.keys(this)) {
-        if(key === String) return this[`${StringKey}`];
-    }
+
+Hashmap.prototype.get = function(StringKey) {
+    return this[StringKey];
 }
 
-Object.prototype.isEmpty = function() {
+Hashmap.prototype.isEmpty = function() {
     if(Object.keys(this).length === 0) return true;
     else return false;
 }
 
-Object.prototype.keys = function() {
+Hashmap.prototype.keys = function() {
     return Object.keys(this);
 }
 
-Object.prototype.replace = function(StringKey, StringValue) {
+Hashmap.prototype.replace = function(StringKey, StringValue) {
     if(Object.keys(this).includes(StringKey)) {
-        this[`${StringKey}`] = StringValue;
+        this[StringKey] = StringValue;
     }
 }
 
-Object.prototype.size = function() {
+Hashmap.prototype.size = function() {
     return Object.keys(this).length;
 }
 
-Object.prototype.clear = function() {
+Hashmap.prototype.clear = function() {
     for(const property in this) {
         delete this[property];
     }
 }
-// 객체 순회 더 공부하기?
-function hashMapFunction() {
-    this.hashMap = new Object();
-    hashMapFunction.prototype.put = function(StringKey, StringValue) {
-        this.hashMap[`${StringKey}`] = StringValue;
-    }
-}
-const obj = new Object();
 
-obj.put(1, 1);
-obj.put(2, 2);
-obj.replace("2", 3);
-console.log(obj);
-console.log(obj.get("1"));
 
-console.log(obj);
-console.log(obj.length);
-console.log(obj.isEmpty());
-console.log(obj.keys());
-obj.clear();
-
-console.log(obj);
+// 중복 방지 알고리즘.
