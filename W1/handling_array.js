@@ -1,5 +1,4 @@
 
-// 1번 문제, 팩토리얼 -> forEach로 다시 만들어보기.
 function calculate(n) {
     let answer = [];
     let input = 1;
@@ -10,27 +9,22 @@ function calculate(n) {
     return answer;
 }
 
-// console.log(calculate(4));
-// [1, 2, 6, 24];
-
-
 // 2번문제 배열 거르기.
-// 정규표현식을 사용할지, 말지?
-// 정규표현식을 사용하지 않는다면, 특수문자를 확인할 방법이 무엇이 있을가에 대해 생각해보기.
 
 const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
 
+
 function hadleIterationUseFor(arr) {
     let answer = [];
-    for(let x of arr) {
-        if(checkSpecialMarks(x)) {
-            answer.push(x);
-        }
-    }
-    answer = removeNumber(answer);
+    // for(let x of arr) {
+    //     if(checkSpecialMarks(x)) {
+    //         answer.push(x);
+    //     }
+    // }
+    answer = arr.filter(item => !checkSpecialMarks(item))
     return answer;
 }
-
+console.log(hadleIterationUseFor(peoples));
 // console.log(hadleIterationUseFor(peoples));
 // 특수 문자 체크 
 
@@ -40,17 +34,17 @@ function checkSpecialMarks(str) {
     else return false;
 }
 
+function checkNumbers(str) {
+    const regExp = /[0-9]/g;
+    if(regExp.test(str)) return true;
+    else return false;
+}
+
+
 // 출처: https://curryyou.tistory.com/208 [카레유]
 
-// 배열의 모든 요소의 숫자를 제거해주는 함수.
-function removeNumber(arr) {
-    const regExp = /[0-9]/g;
-    let answer = arr;
-    for(let i = 0; i < answer.length; i++) {
-        answer[i] = answer[i].replace(regExp, "");
-    }
-    return answer;
-}
+
+
 
 // 3번문제
 
