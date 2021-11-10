@@ -4,6 +4,8 @@
 // 대괄호 삭제하는 정규표현식....
 
 const data = "[1,2,[3,4,[5,[6]]]]";
+// 이 string data를 바로 배열화 하는 방법을
+// 도저히 모르겠음..
 
 // 정규식 사용하지 않으면,
 // let newData ="";
@@ -55,3 +57,50 @@ console.log(isCorrectBracket(data));
 // console.log(matchingBracket(falseData));
 // console.log(matchingBracket(trueData));
 
+
+
+
+// 3번
+let stack = [];
+
+let data = "[1,2,[3]]"
+data = data.replaceAll("," , "");
+
+let obj = {};
+
+
+let obj = {
+  "type" : "array",
+  "child": stack,
+}
+let i = 0;
+while(i < data.length) {
+  if(data[i] === "[") {
+    if(stack.length > 0) {
+      console.log(makeObj(stack));
+    }
+    stack.length = 0;
+    i++;
+  } else if(data[i] === "]") break;
+  else {
+    stack.push(printNumInformation(data[i]));
+    console.log(stack);
+    i++;
+  }
+}
+
+console.log(obj);
+function typeCheck(str) {
+  if(typeof(+str) === Number) return "number";
+  else return "array";
+}
+
+function printNumInformation(n) {
+  return {
+    "type": "number",
+    "value": n,
+    "child": [],
+  }
+}
+// stack들을 만드는건 구현했는데,
+// stack들이 각 객체에 자연스럽게 연결을 어떻게 할 수 있는지모르겠음.
