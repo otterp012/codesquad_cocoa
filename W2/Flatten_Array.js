@@ -1,4 +1,4 @@
-const data = "[1,2,[3,4,[5,[6]]]]";
+// const data = "[1,2,[3,4,[5,[6]]]]";
 
 // 받은 피드백
 /* 숫자가 2자리 이상일 경우를 대비해 ","를 지우는 방식이 아니라,
@@ -8,7 +8,7 @@ const data = "[1,2,[3,4,[5,[6]]]]";
 
 
 // ] 닫는괄호가 처음에 나오는 경우 오류를 리턴해야함. (해결) if문 하나 추가함.
-console.log(data.split(""));
+
 function printObjInformation(data) {
   if(isCorrectBracket(data) === "일치합니다.") {
     let dataDepth = 0;
@@ -23,7 +23,10 @@ function printObjInformation(data) {
   } else return `올바른 괄호가 아닙니다.`;
 }
 
-console.log(printObjInformation(data));
+// JSON.parse() 공부하기!
+
+// console.log(printObjInformation(data));
+
 function isCorrectBracket(data) {
   const stack = [];
   data = data.split(""); 
@@ -38,4 +41,64 @@ function isCorrectBracket(data) {
   else if(stack.includes("]")) return "여는 괄호가 일치하지 않습니다.";
   else return "일치합니다.";
 }
-console.log(isCorrectBracket(data));
+// console.log(isCorrectBracket(data));
+
+
+// 3번 문제
+// 정석적인 접근
+// tokenizer, lexer, parser 순서대로.
+// 공부도 겸사겸사
+
+let data = "[1,2,[3]]";
+data = data.split("");
+console.log(data);
+
+// 여기까지 tokenizer, 의미있는 토큰들로 나눔 
+// 토큰정보가 모여있는 배열이 반환됨.
+
+const lexer = {
+  "[" : "array",
+  "]" : "close",
+  "," : "comma"
+};
+
+const root = {
+  type: "array",
+  child: [],
+}
+let depth = 0;
+let stack = [];
+// ,면 stack에 들어가게.
+let obj = {};
+
+
+function lex(str) {
+  if(str === "[") {
+    return {
+      type: "array",
+      child: [],
+    }
+  } else if(!isNaN(+str)) {
+    return {
+      type: "number",
+      valut: +str,
+      child: [],
+    }
+  }
+}
+
+
+console.log(lex(2));
+
+
+// function number(str){
+//   if(!isNaN(+str)) {
+//     return {
+//       type: "number",
+//       value: +str,
+//       child: [],
+//     }
+//   }
+// }
+
+// console.log(number(1));
