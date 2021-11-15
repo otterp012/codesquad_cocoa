@@ -49,3 +49,5 @@ console.log(min, max);
 // 답은, 45%임.
 
 // https://otterpjoe.notion.site/MISSION5-GRADES-da441d82f22046649a63e8c9ce0aff88
+// 구상-목표부분 종이풀이
+
