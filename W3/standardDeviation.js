@@ -1,22 +1,22 @@
 let data = [89.23, 82.03, 71.56, 78.82, 85.05, 
-            84.44, 67.53, 71.70, 77.97, 73.77, 
-            84.25, 67.01, 73.78, 64.19, 89.89, 
-            90.32, 73.21, 75.35, 83.22, 74.01];
+    84.44, 67.53, 71.70, 77.97, 73.77, 
+    84.25, 67.01, 73.78, 64.19, 89.89, 
+    90.32, 73.21, 75.35, 83.22, 74.01];
 
 function getSum(arr) {
-  return arr.reduce(((acc, cur) => acc + cur), 0);
+return arr.reduce(((acc, cur) => acc + cur), 0);
 }
 
 function getMean(arr) {
-  return getSum(arr)/arr.length;
+return getSum(arr)/arr.length;
 }
 
 function getDistance(arr) {
-  return arr.reduce((acc, cur) => acc+ Math.abs(cur-getMean(arr))**2 , 0)/arr.length;
+return arr.reduce((acc, cur) => acc+ Math.abs(cur-getMean(arr))**2 , 0)/arr.length;
 }
 
 function getStandardDeviation(arr) {
-  return Math.sqrt(getDistance(arr));
+return Math.sqrt(getDistance(arr));
 }
 
 
@@ -30,9 +30,10 @@ function getStandardDeviation(arr) {
 
 const average = getMean(data);
 const standardDeviation = getStandardDeviation(data);
-console.log(average, standardDeviation);
+
 const min = Math.abs((70 - average))/standardDeviation;
 const max = Math.abs((80 - average))/standardDeviation;
+
 console.log(min, max);
 
 // 소수 둘째자리 반올림.
@@ -47,3 +48,4 @@ console.log(min, max);
 // (min + max) *100 이 70과 80사이의 비율을 말하게 되므로
 // 답은, 45%임.
 
+// https://otterpjoe.notion.site/MISSION5-GRADES-da441d82f22046649a63e8c9ce0aff88
