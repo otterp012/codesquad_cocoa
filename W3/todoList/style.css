@@ -1,0 +1,25 @@
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow:hidden;
+    margin:0;
+}
+
+.todo-lists {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.checked p {
+    text-decoration: line-through;
+}
