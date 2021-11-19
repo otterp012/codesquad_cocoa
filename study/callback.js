@@ -35,7 +35,7 @@ class UserStorage {
     loginUser(id, password, onSuccess, onError) {
         setTimeout(() => {
             if(
-                (id === 'ellie' && password === 'drean') ||
+                (id === 'ellie' && password === 'dream') ||
                 (id === 'coder' && password === 'academy')
             ) {
                 onSuccess(id);
@@ -58,24 +58,34 @@ class UserStorage {
 
 const userStorage = new UserStorage();
 const id = prompt('enter your id');
-const password = prompt('enter your password');
-userStorage.loginUser(id,
-                      password, 
-                      (user) => {
-                            userStorage.getRoles(
-                                user, 
-                                userWithRole => {
-                                    alert(`Hello ${userWithRole.name}, you have a ${userWithRole.role} role`)
-                                },
-                        error => {}
-                        );
-                      }, 
-                      (error) => {
-                          console.log(error);
-                      }
-                      );
+const password = prompt('enter your passrod');
+userStorage.loginUser(
+  id,
+  password,
+  user => {
+    userStorage.getRoles(
+      user,
+      userWithRole => {
+        alert(
+          `Hello ${userWithRole.name}, you have a ${userWithRole.role} role`
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  },
+  error => {
+    console.log(error);
+  }
+);
 // 이러한 콜백 체인의 문제점, 콜백지옥
 // 콜백지옥의 문제점
 // 1. 가독성이 너무 많이 떨어짐..!
 // 2. 문제분석 힘듦
 // 3. 유지보수 힘듦
+
+
+userStorage.loginUser(id, password, function(loginUser.onSuccess), function(loginUser.onError))
+
+fu
