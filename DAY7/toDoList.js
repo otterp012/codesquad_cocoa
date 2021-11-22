@@ -3,117 +3,135 @@ const $addButton = document.querySelector('.add-button');
 const $dateInput = document.querySelector('.date-input');
 
 
-const $classificationButton = document.querySelector('.classification-button');
+const $classificationContainer = document.querySelector('.classification-container');
 const $classificationDate = document.querySelector('.classification-date')
-
 const $listContainer = document.querySelector('.list-container');
 
 
-
 $addButton.addEventListener(('click'), () => {
-    makeNewLists();
-    console.log($dateInput.value);
-})
-
-$classificationDate.onchange = handle;
-
-function handle(e) {
-    const $listDates = document.querySelectorAll('.list-date');
-    $listDates.forEach((node) => {
-        if(e.target.value !== node.value) {
-            node.parentNode.id = "hidden";
-            console.log("맙ㅈ음");
-        } else {
-            node.parentNode.id = "unhidden";
-        }
-    })
-    console.log(e.target.value);
-}
-
-$classificationButton.addEventListener(('click'), () => {
-    console.log($classificationButton.textContent);
-    const $checkedList = document.querySelectorAll('.checked');
-
-    if($classificationButton.innerText === "completed") {
-        console.log("yest");
-        $checkedList.forEach((node) => {
-            node.id = "hidden";
-        })
-        console.log($classificationButton.innerText);
-        $classificationButton.innerText = "uncompleted"
-    } else  {
-        console.log("no");
-        $checkedList.forEach((node) => {
-            node.id = "unhidden";
-        })
-        $classificationButton.innerText = "completed";
-    }
+    makeNewDay($dateInput);
+    $inputSpace.value = "";
 })
 
 $listContainer.addEventListener('click', (event) => {
-    if(event.target.id === "checkbox") {
-        event.target.parentNode.classList.toggle("checked");
+    handleClickDelete(event.target, 'delete-button');
+    handleClickModify(event.target, 'modify-button');
+    handleClickCheckbox(event.target, 'checkbox');
 
-        // if(event.target.classList.contains("checked")) {
-        //     event.target.parentNode.classList.add("checked");
-        // } else {
-        //     event.target.parentNode.classList.remove("checked");
-        // }
-    } 
-    
-    if(event.target.className === "delete-button") {
-        event.target.parentNode.id = "deleted";
-        document.getElementById("deleted").remove();
-    }
-  
-    const $p = document.querySelector("p");
-    if(event.target.tagName === "P") {
-        $p.addEventListener(("click"), (e) => {
-
-            if($p.contentEditable === "false") {
-                $p.classList.add("contentEditable");
-                $p.contentEditable = true;
-            } else {
-                  $p.classList.add("contentEditable");
-                $p.contentEditable = true;
-            }
-           
-            e.stopPropagation();
-            // e.preventDefault와 차이점 공부하기.
-        })
-    }
 })
 
-function makeNewLists() {
-    const $data = $inputSpace.value;
-    const makeLiTag = document.createElement("li");
-    const makeInputTag = document.createElement("input");
-    const makePTag = document.createElement("p");
-    const makedate = document.createElement("input");
-    const makeModifyButton = document.createElement("button");
-    const makeDeleteButton = document.createElement("button");
+$classificationContainer.addEventListener(('click'), (event) => {
+    handleClickCompleteButton(event.target, 'complete-button');
+    handleClickUnCompleteButton(event.target, 'uncomplete-button');
+    handleClickAllViewButton(event.target, 'all-view-button');
+})
 
-    $listContainer.appendChild(makeLiTag);
-    makeLiTag.appendChild(makeInputTag);
-    makeLiTag.appendChild(makePTag);    
-    makeLiTag.appendChild(makedate);
-    makeLiTag.appendChild(makeModifyButton);
-    makeLiTag.appendChild(makeDeleteButton);
-    
-    makeLiTag.classList.add("new-list")
-    makeInputTag.setAttribute("type", "checkbox");
-    makeInputTag.setAttribute("id", "checkbox");
-    makedate.setAttribute("type", "date");
-    makedate.setAttribute("class", "list-date");
-    makeModifyButton.setAttribute("class",
-    "modify-button");
-    makeDeleteButton.setAttribute("class", "delete-button");
+function handleClickDelete(target, class_name) {
+    if(target.className === class_name){
+        target.parentNode.parentNode.id = 'deleted';
+        document.getElementById('deleted').remove();
+    }
+};
 
-    makePTag.innerText = $data;
-    makedate.value = $dateInput.value;
-    makeModifyButton.innerText = "Modify";
-    makeDeleteButton.innerText = "delete";
-    $inputSpace.value = null;
+function handleClickModify(target, class_name) {
+    const $modifiedText = target.parentNode.previousSibling;
+    if(target.className === class_name) {
+        if($modifiedText.contentEditable === 'false') {
+            $modifiedText.id = 'contentEditable';
+            $modifiedText.contentEditable = true;
+        } else {
+            $modifiedText.id = null;
+            $modifiedText.contentEditable = false;
+        }
+    }
+};
+
+function handleClickCheckbox(target, class_name) {
+    if(target.className === class_name) {
+        target.checked === true ? target.nextSibling.classList.add('checked') : target.nextSibling.classList.remove('checked')
+    }
+};
+
+function makeNewDay() {
+    const newPost  = document.createElement('div');
+    newPost.id = $dateInput.value;
+    newPost.className = 'new-post';
+    $listContainer.appendChild(newPost);
+
+    const newh3 = document.createElement('div');
+    newh3.textContent = $dateInput.value;
+    newPost.appendChild(newh3);
+
+    appendNewTextContainer(newPost);
 }
 
+function appendNewTextContainer(node) {
+    
+    const newLi = document.createElement('li');
+    newLi.className = 'new-list';
+        
+    const newCheckbox = document.createElement('input');
+    newCheckbox.className = 'checkbox';
+    newCheckbox.setAttribute('type', 'checkbox');    
+
+    const newP = document.createElement('p');
+    newP.className = 'new-List-text';
+    newP.textContent = $inputSpace.value;
+    newP.contentEditable = false;
+    
+        // node.appendChild(newAddInput);
+    node.appendChild(newCheckbox);
+    node.appendChild(newP);   
+
+    const newButtonContainer = document.createElement('div');
+    newButtonContainer.className = 'new-button-container';
+
+    const newModifyButton = document.createElement('button');
+    newModifyButton.className = 'modify-button';
+    newModifyButton.textContent = 'modify';
+
+    const newDeleteButton = document.createElement('button');
+    newDeleteButton.className = 'delete-button';
+    newDeleteButton.textContent = "delete";
+        
+    node.appendChild(newButtonContainer);
+    newButtonContainer.appendChild(newModifyButton);
+    newButtonContainer.appendChild(newDeleteButton);
+    }
+
+function handleClickCompleteButton(target, class_name) {
+    if(target.className === class_name) {
+        document.querySelectorAll('.new-List-text').forEach((node) => {
+            if(node.className !== 'new-List-text checked') {
+                node.parentNode.classList.add('hidden');
+            }
+        })
+    }
+}
+
+function handleClickUnCompleteButton(target, class_name) {
+    if(target.className === class_name) {
+        document.querySelectorAll('.new-List-text.checked').forEach((node) => {
+            node.parentNode.classList.add('hidden');
+        })
+    }
+}
+
+function handleClickAllViewButton(target, class_name) {
+    if(target.className === class_name) {
+        document.querySelectorAll('.hidden').forEach((node) => {
+            console.log(node);
+            node.classList.remove('hidden');
+        })
+    }
+}
 // https://stackoverflow.com/questions/33451050/classname-vs-get-setattribute-method
+
+// 코드의 문제 -> 이벤트 위임으로 모든걸 하려고 하니까.
+// 이거 함수 나누기가 힘들어짐.
+
+// setAttribute v s classname
+// textcontent vs innerHTML ve innerText
+// e.preventDefault vs `
+// nodelist vs HTMLCOLLECTION
+// 정렬은 나중에 div 정렬하고싶음.

@@ -9,21 +9,29 @@
 <body>
     <div class="container">
         <h1>TO-DO LIST</h1>
+        <!-- <p>WRITE DOWN, YOUR PALNS</p> -->
         <div class="add-container">
-            <input type="text" class= "input-space" placeholder="새로운 할일을 적어주세요.">
+            <input type="text" class= "input-space" placeholder="무엇을 계획하나요?">
+          
             <input type="date" class= "date-input" />
-            <button type="submit" class="add-button">add</button>
-        </div>
-        <div class="classification-container">
-            <button class="classification-button">
-                completed
-            </button>
-            <input type="date" class="classification-date">  
+            <button type="submit" class="add-button">추가하기</button>
+            
         </div>
         <ul class="list-container">
 
         </ul>
-        
+        <div class="classification-container">
+            <button class="complete-button">
+                완료
+            </button>
+            <button class="uncomplete-button">
+                미완료
+            </button>
+            <input type="date" class="classification-date">  
+            <button class="all-view-button">
+                전체보기
+            </button>
+        </div>
     </div>
 
     <script src= "toDoList.js"></script>

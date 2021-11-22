@@ -7,27 +7,118 @@ body {
     height: 100vh;
     overflow:hidden;
     margin:0;
+    background-color: #F0E9D2;
+}
+.container {
+    height: 80vh;
+    width: 600px;
+    padding: 0;
+}
+.container h1 {
+    font-size: 60px;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0;
+    color: #181D31;
 }
 
-.todo-lists {
+.container p {
+    font-size: 20px;
+    font-weight: 100;
+    margin: 0 0 5px 10px;
+    color: #181D31;
+}
+
+.add-container .input-space {
+    border: none;
+    background-color: #F0E9D2;
+    color: #181D31;
+    margin: 0 0 5px 10px;
+    font-size: 25px;
+    font-weight: 200;
+}
+.buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 }
 
-li {
-    list-style: none;
+input {
+    border: none;
+    background-color: #F0E9D2;
+}
+
+input:focus {
+    outline: none;
+    background-color: #678983;
+}
+
+button {
+    border: none;
+    background-color: #F0E9D2;
+}
+
+button:focus {
+    outline: none;
+    background-color: #678983;
+}
+.add-container .input-space:focus {
+    outline: none;
+}
+
+.add-container .date-input {   
+    background-color: #F0E9D2;
+    border: none;
+    margin: 0 0 5px 15px;
+}
+
+.add-container .date-input:focus {
+    background-color: #678983;
+    outline: none;
+}
+
+.add-container .add-button {
+    background-color: #F0E9D2;
+    border: none;
+    font-style: italic;
+}
+
+.add-container .add-button:focus {
+    background-color: #678983;
+}
+
+.list-container {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+}
+.new-post {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    height: 30px;
+    margin: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #E6DDC4;
+    line-height: 
 }
 
-.new-list.checked p{
+.new-post h3 {
+    font-size: 15px;
+}
+
+
+
+.new-List-text.checked {
     text-decoration: line-through;
 }
-
-.new-list.checked#hidden {
-    display: none;
+.new-post button {
+    background-color: #E6DDC4;
 }
 
-.new-list#hidden {
+.hidden {
     display: none;
 }
