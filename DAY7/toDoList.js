@@ -63,10 +63,10 @@ function makeNewDay() {
     newh3.textContent = $dateInput.value;
     newPost.appendChild(newh3);
 
-    appendNewTextContainer(newPost);
+    appendNewContainer(newPost);
 }
 
-function appendNewTextContainer(node) {
+function appendNewContainer(node) {
     
     const newLi = document.createElement('li');
     newLi.className = 'new-list';
