@@ -17,7 +17,6 @@ $listContainer.addEventListener('click', (event) => {
     handleClickDelete(event.target, 'delete-button');
     handleClickModify(event.target, 'modify-button');
     handleClickCheckbox(event.target, 'checkbox');
-
 })
 
 $classificationContainer.addEventListener(('click'), (event) => {
@@ -48,7 +47,9 @@ function handleClickModify(target, class_name) {
 
 function handleClickCheckbox(target, class_name) {
     if(target.className === class_name) {
-        target.checked === true ? target.nextSibling.classList.add('checked') : target.nextSibling.classList.remove('checked')
+        target.checked === true 
+        ? target.nextSibling.classList.add('checked') 
+        : target.nextSibling.classList.remove('checked')
     }
 };
 
@@ -97,7 +98,7 @@ function appendNewTextContainer(node) {
     node.appendChild(newButtonContainer);
     newButtonContainer.appendChild(newModifyButton);
     newButtonContainer.appendChild(newDeleteButton);
-    }
+}
 
 function handleClickCompleteButton(target, class_name) {
     if(target.className === class_name) {
