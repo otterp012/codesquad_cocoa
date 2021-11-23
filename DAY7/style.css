@@ -122,3 +122,11 @@ button:focus {
 .hidden {
     display: none;
 }
+
+#contentEditable {
+    background-color: #678983;
+}
+
+#contentEditable:focus {
+    outline: none;
+}

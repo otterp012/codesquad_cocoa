@@ -3,15 +3,66 @@ const $addButton = document.querySelector('.add-button');
 const $dateInput = document.querySelector('.date-input');
 
 
-const $classificationContainer = document.querySelector('.classification-container');
-const $classificationDate = document.querySelector('.classification-date')
+const $classificationContainer = document.querySelector('.classification-container')
 const $listContainer = document.querySelector('.list-container');
 
+// TODOS 만들기.
 
 $addButton.addEventListener(('click'), () => {
-    makeNewDay($dateInput);
+    createPostBox($dateInput);
     $inputSpace.value = "";
 })
+
+function createPostBox() {
+    const newPost  = document.createElement('div');
+    newPost.id = $dateInput.value;
+    newPost.className = 'new-post';
+    $listContainer.appendChild(newPost);
+
+    const newDateInput = document.createElement('input');
+    newDateInput.setAttribute('type', 'date');
+    newDateInput.setAttribute('value', $dateInput.value);
+    newDateInput.className = 'new-date-input';
+    
+    newPost.appendChild(newDateInput);
+    createPostText(newPost);
+    createButton(newPost);
+}
+
+function createPostText(node) {
+    
+    const newCheckbox = document.createElement('input');
+    newCheckbox.className = 'checkbox';
+    newCheckbox.setAttribute('type', 'checkbox');    
+    node.appendChild(newCheckbox);
+
+    const newText = document.createElement('p');
+    newText.className = 'new-List-text';
+    newText.textContent = $inputSpace.value;
+    newText.contentEditable = false;
+    
+    node.appendChild(newText);   
+}
+
+function createButton(node) {
+
+    const newButtonContainer = document.createElement('div');
+    newButtonContainer.className = 'new-button-container';
+
+    const newModifyButton = document.createElement('button');
+    newModifyButton.className = 'modify-button';
+    newModifyButton.textContent = 'modify';
+
+    const newDeleteButton = document.createElement('button');
+    newDeleteButton.className = 'delete-button';
+    newDeleteButton.textContent = "delete";
+        
+    node.appendChild(newButtonContainer);
+    newButtonContainer.appendChild(newModifyButton);
+    newButtonContainer.appendChild(newDeleteButton);
+}
+
+// ToDosEventHandler
 
 $listContainer.addEventListener('click', (event) => {
     handleClickDelete(event.target, 'delete-button');
@@ -19,11 +70,6 @@ $listContainer.addEventListener('click', (event) => {
     handleClickCheckbox(event.target, 'checkbox');
 })
 
-$classificationContainer.addEventListener(('click'), (event) => {
-    classifyComplete(event.target, 'complete-button');
-    classifyUnComplete(event.target, 'uncomplete-button');
-    classifyAllView(event.target, 'all-view-button');
-})
 
 function handleClickDelete(target, class_name) {
     if(target.className === class_name){
@@ -53,49 +99,13 @@ function handleClickCheckbox(target, class_name) {
     }
 };
 
-function makeNewDay() {
-    const newPost  = document.createElement('div');
-    newPost.id = $dateInput.value;
-    newPost.className = 'new-post';
-    $listContainer.appendChild(newPost);
+// ClassificationManager
 
-    const newh3 = document.createElement('div');
-    newh3.textContent = $dateInput.value;
-    newPost.appendChild(newh3);
-
-    appendNewContainer(newPost);
-}
-
-function appendNewContainer(node) {
-    
-    const newCheckbox = document.createElement('input');
-    newCheckbox.className = 'checkbox';
-    newCheckbox.setAttribute('type', 'checkbox');    
-
-    const newP = document.createElement('p');
-    newP.className = 'new-List-text';
-    newP.textContent = $inputSpace.value;
-    newP.contentEditable = false;
-    
-        // node.appendChild(newAddInput);
-    node.appendChild(newCheckbox);
-    node.appendChild(newP);   
-
-    const newButtonContainer = document.createElement('div');
-    newButtonContainer.className = 'new-button-container';
-
-    const newModifyButton = document.createElement('button');
-    newModifyButton.className = 'modify-button';
-    newModifyButton.textContent = 'modify';
-
-    const newDeleteButton = document.createElement('button');
-    newDeleteButton.className = 'delete-button';
-    newDeleteButton.textContent = "delete";
-        
-    node.appendChild(newButtonContainer);
-    newButtonContainer.appendChild(newModifyButton);
-    newButtonContainer.appendChild(newDeleteButton);
-}
+$classificationContainer.addEventListener(('click'), (event) => {
+    classifyComplete(event.target, 'complete-button');
+    classifyUnComplete(event.target, 'uncomplete-button');
+    classifyAllView(event.target, 'all-view-button');
+})
 
 function classifyComplete(target, class_name) {
     if(target.className === class_name) {
@@ -123,6 +133,7 @@ function classifyAllView(target, class_name) {
         })
     }
 }
+
 // https://stackoverflow.com/questions/33451050/classname-vs-get-setattribute-method
 
 // 코드의 문제 -> 이벤트 위임으로 모든걸 하려고 하니까.

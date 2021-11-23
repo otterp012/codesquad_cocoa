@@ -6,12 +6,16 @@ class ToDosCreater {
         this.newPost.id = dateValue;
         this.newPost.className = 'new-post';
         ancestor.appendChild(this.newPost);
-    }
-     createPostText(dateValue, inputSpaceValue) {
-        this.tittle = document.createElement('div');
-        this.tittle.textContent = dateValue;
-        this.newPost.appendChild(this.tittle);
 
+        this.newDateInput = document.createElement('input');
+        this.newDateInput.setAttribute('type', 'date')
+        this.newDateInput.setAttribute('value', dateValue);
+        this.newDateInput.className = 'new-date-input';
+        this.newPost.appendChild(this.newDateInput);
+
+    }
+     createPostText(inputSpaceValue) {
+       
         this.newCheckbox = document.createElement('input');
         this.newCheckbox.className = 'checkbox';
         this.newCheckbox.setAttribute('type', 'checkbox');
@@ -43,6 +47,11 @@ class ToDosCreater {
 }
 
 class ToDosEventHandler {
+    // constructor() {
+    //     this.target = event.target;
+    //     this.class_name = className;
+    // } constructor이걸로, 이용하면 될거같은데 공부중
+
     handleClickDelete(target, class_name) {
         if(target.className === class_name){
             target.parentNode.parentNode.id = 'deleted';
@@ -73,6 +82,7 @@ class ToDosEventHandler {
 }
 
 class ClassificationManager {
+    
     classifyComplete(target, class_name) {
         if(target.className === class_name) {
             document.querySelectorAll('.new-List-text').forEach((node) => {
@@ -94,7 +104,6 @@ class ClassificationManager {
     classifyAllView(target, class_name) {
         if(target.className === class_name) {
             document.querySelectorAll('.hidden').forEach((node) => {
-                console.log(node);
                 node.classList.remove('hidden');
             })
         }
@@ -112,15 +121,19 @@ class Init {
             const $dateInput = document.querySelector('.date-input');
             const $inputSpace = document.querySelector('.input-space');
             toDosCreater.createPostBox($listContainer,$dateInput.value);
-            toDosCreater.createPostText($dateInput.value, $inputSpace.value);
+            toDosCreater.createPostText($inputSpace.value);
             toDosCreater.createButton();
+
+            $inputSpace.value = "";
         })
     }
 
     handleToDosEvent = () => {
         
         const toDosEventHandler = new ToDosEventHandler();
-        document.addEventListener(('click'), (event) => {
+        const $listContainer = document.querySelector('.list-container');
+        $listContainer.addEventListener(('click'), (event) => {
+
             toDosEventHandler.handleClickDelete(event.target, 'delete-button');
             toDosEventHandler.handleClickModify(event.target, 'modify-button');
             toDosEventHandler.handleClickCheckbox(event.target, 'checkbox');
@@ -129,7 +142,9 @@ class Init {
 
     classifyToDos = () => {
         const classificationManager = new ClassificationManager();
-        document.addEventListener(('click'), (event) => {
+        const $classificationContainer = document.querySelector('.classification-container')
+
+        $classificationContainer.addEventListener(('click'), (event) => {
             classificationManager.classifyComplete(event.target, 'complete-button');
             classificationManager.classifyUnComplete(event.target, 'uncomplete-button');
             classificationManager.classifyAllView(event.target, 'all-view-button');
