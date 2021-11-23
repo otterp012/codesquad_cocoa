@@ -17,3 +17,7 @@
 - 클래스간의 연결시 결합도가 낮은 편. 
 - 클래스의 메서드들 역시 자기의 역할에 충실하며 작은 역할만 하는 코드로 구현되어 있음. 
 - 생성자에서는 객체의 속성을 초기화 하는 역할만 하고 있음. 
+
+
+[노션 페이지-TODOS](https://otterpjoe.notion.site/MISSION6-TO-DOS-01d9f30e166b4edf9bac12a9aeaeb919)  
+[노션 페이지-REFACTORING](https://otterpjoe.notion.site/MISSION7-CLASS-REFACTORING-1aca9d5c0bd148a6b220fcefddd4263b)
