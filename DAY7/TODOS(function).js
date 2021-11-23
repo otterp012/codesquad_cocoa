@@ -20,9 +20,9 @@ $listContainer.addEventListener('click', (event) => {
 })
 
 $classificationContainer.addEventListener(('click'), (event) => {
-    handleClickCompleteButton(event.target, 'complete-button');
-    handleClickUnCompleteButton(event.target, 'uncomplete-button');
-    handleClickAllViewButton(event.target, 'all-view-button');
+    classifyComplete(event.target, 'complete-button');
+    classifyUnComplete(event.target, 'uncomplete-button');
+    classifyAllView(event.target, 'all-view-button');
 })
 
 function handleClickDelete(target, class_name) {
@@ -68,9 +68,6 @@ function makeNewDay() {
 
 function appendNewContainer(node) {
     
-    const newLi = document.createElement('li');
-    newLi.className = 'new-list';
-        
     const newCheckbox = document.createElement('input');
     newCheckbox.className = 'checkbox';
     newCheckbox.setAttribute('type', 'checkbox');    
@@ -100,7 +97,7 @@ function appendNewContainer(node) {
     newButtonContainer.appendChild(newDeleteButton);
 }
 
-function handleClickCompleteButton(target, class_name) {
+function classifyComplete(target, class_name) {
     if(target.className === class_name) {
         document.querySelectorAll('.new-List-text').forEach((node) => {
             if(node.className !== 'new-List-text checked') {
@@ -110,7 +107,7 @@ function handleClickCompleteButton(target, class_name) {
     }
 }
 
-function handleClickUnCompleteButton(target, class_name) {
+function classifyUnComplete(target, class_name) {
     if(target.className === class_name) {
         document.querySelectorAll('.new-List-text.checked').forEach((node) => {
             node.parentNode.classList.add('hidden');
@@ -118,7 +115,7 @@ function handleClickUnCompleteButton(target, class_name) {
     }
 }
 
-function handleClickAllViewButton(target, class_name) {
+function classifyAllView(target, class_name) {
     if(target.className === class_name) {
         document.querySelectorAll('.hidden').forEach((node) => {
             console.log(node);
