@@ -1,32 +1,31 @@
 // 클로저, debounce의 개념 사용 못함
-
-
-const tittle = document.querySelector('.tittle');
-const fruits = document.querySelectorAll('.fruits');
+const $tittle = document.querySelector('.tittle');
+const $fruits = document.querySelectorAll('.fruits');
 const conunterContainer = document.querySelector('.counter-container');
 
-tittle.addEventListener('mouseout', () => {
+let timer;
+
+$tittle.addEventListener('mouseout', () => {
     clearTimeout(timer);
-    console.log("중단됨");
 });
 
-tittle.addEventListener('mouseover', () => {
+$tittle.addEventListener('mouseover', () => {
     timer = setTimeout(() => {
-        fruits.forEach((node) => {
+        $fruits.forEach((node) => {
             node.classList.remove('hidden');
         })
     }, 1000)
 })
 
 const map = new Map();
-fruits.forEach((fruit) => {
+$fruits.forEach((fruit) => {
     fruit.id = fruit.textContent;
     map.set(fruit.id, 0);
 })
 
 let fruitTimer;
 
-fruits.forEach((fruit) => {
+$fruits.forEach((fruit) => {
     fruit.addEventListener(('mouseover'), () => {
         fruitTimer = setTimeout(function addFruit() {
             map.set(fruit.id, +map.get(fruit.id)+1);
@@ -37,15 +36,16 @@ fruits.forEach((fruit) => {
 
     fruit.addEventListener(('mouseout'), () => {
         clearTimeout(fruitTimer);
-        console.log("과일추가 중단됨");
     })
 })
 
 function printMap(map) {
-    const texts = document.querySelectorAll('.text');
-    for(let i = 0; i < [...map].length; i++){
-        texts[i].textContent = [...map][i];
-    }
+    const $texts = document.querySelectorAll('.text');
+   
+    $texts.forEach((text, index) => {
+       text.textContent = [...map][index];
+    })
+    
 }
 
 
