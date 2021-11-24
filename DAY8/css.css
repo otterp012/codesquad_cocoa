@@ -34,6 +34,15 @@ body {
     color: red;
 }
 
+.sub-tittle {
+    color: #678983;
+    font-style: italic;
+}
+
+.sub-tittle.hidden {
+    display: none;
+}
+
 .fruits {
     width: 200px;
     height: 40px;
@@ -61,10 +70,15 @@ body {
     text-align: center;
     border: 3px solid #678983;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+.text-container {
+    display: flex;
+}
+
 
 .text {
     margin: 10px;

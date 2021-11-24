@@ -1,7 +1,8 @@
 // 클로저, debounce의 개념 사용 못함
 const $tittle = document.querySelector('.tittle');
 const $fruits = document.querySelectorAll('.fruits');
-const conunterContainer = document.querySelector('.counter-container');
+const $subTittle = document.querySelector('.sub-tittle');
+
 
 let timer;
 
@@ -14,6 +15,8 @@ $tittle.addEventListener('mouseover', () => {
         $fruits.forEach((node) => {
             node.classList.remove('hidden');
         })
+
+        $subTittle.classList.add('hidden');
     }, 1000)
 })
 
