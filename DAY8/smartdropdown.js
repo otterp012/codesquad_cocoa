@@ -20,10 +20,10 @@ $tittle.addEventListener('mouseover', () => {
     }, 1000)
 })
 
-const map = new Map();
+const counterMap = new Map();
 $fruits.forEach((fruit) => {
     fruit.id = fruit.textContent;
-    map.set(fruit.id, 0);
+    counterMap.set(fruit.id, 0);
 })
 
 let fruitTimer;
@@ -31,8 +31,8 @@ let fruitTimer;
 $fruits.forEach((fruit) => {
     fruit.addEventListener(('mouseover'), () => {
         fruitTimer = setTimeout(function addFruit() {
-            map.set(fruit.id, +map.get(fruit.id)+1);
-            printMap(map);
+            counterMap.set(fruit.id, +counterMap.get(fruit.id)+1);
+            printMap(counterMap);
             fruitTimer = setTimeout(addFruit, 500);
         }, 500);
     })
