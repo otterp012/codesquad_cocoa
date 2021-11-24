@@ -41,16 +41,18 @@ fruits.forEach((fruit) => {
     })
 })
 
-// for(let i = 0; i < 6; i++){
-//     conunterContainer.appendChild(document.createElement('p'));
-// } 동적생성 안하고 그냥 만들어두기로.
-
 function printMap(map) {
     const texts = document.querySelectorAll('.text');
     for(let i = 0; i < [...map].length; i++){
         texts[i].textContent = [...map][i];
     }
 }
+
+
+
+// for(let i = 0; i < 6; i++){
+//     conunterContainer.appendChild(document.createElement('p'));
+// } 동적생성 안하고 그냥 만들어두기로.
 
 // https://www.youtube.com/watch?v=F2zF8fu7aG0
 
