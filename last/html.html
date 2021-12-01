@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUTER ?</title>
+    <link rel="stylesheet" href="css.css">
+    <script src="https://kit.fontawesome.com/255bc982a0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="tittle">NOW OUTER ?</h1>
+        <div class="today-container">
+            <div class="date-container">
+                <div class="now-date">1</div>
+                <div class="now-time">2</div>
+            </div>
+            <div class="today-weather-text-container">
+                <p class="today-weather-text" id="main-temp-text">℃</p>
+                <p class="today-weather-text"></p>
+            </div>
+                <div class="recommend-container">
+                    <!-- <img src="https://cdn-icons.flaticon.com/png/512/1926/premium/1926409.png?token=exp=1638337847~hmac=3b30fa08da562ecbd44edda00215714a" alt="" class="clothing"> -->
+                </div>
+        </div>
+
+        <div class="button-container">
+            <button class="identify-location-button">IDENTIFY LOCATION</button>
+            <input type="date" class="date-input" />
+        </div>
+
+        <div class="map-modal hidden">
+            <div class="map-container" id="map"></div> 
+            <p class="map-text"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce0c0a4dc4947bbeec8ab71b076da08c&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ce0c0a4dc4947bbeec8ab71b076da08c"></script>
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #FAEDF0;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+    width: 600px;
+}
+
+.tittle {
+    margin: 20px 0;
+    color: #161853;
+    font-size: 5em;
+    font-weight: 200;
+    font-style: italic;
+    text-align: center;
+}
+
+.date-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0  0 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #161853;
+}
+
+.now-date {
+    margin: 0px 5px 0px 0px;
+    padding: 0;
+}
+
+.now-time {
+    margin: 0;
+    padding: 0;
+}
+
+.today-weather-text-container {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #EC255A;
+}
+
+.recommend-container {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.recommend-container .outer-image{
+    width: 400px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    color: #161853;
+}
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0 0 0;
+}
+
+.button-container .identify-location-button {
+    width: 50%;
+    height: 50px;
+    border: none;
+    background-color: #FAEDF0;
+    font-style: italic;
+    font-size: 1.5em;
+    color: #292C6D;
+}
+
+.button-container .identify-location-button:focus {
+    background-color: #292C6D;
+    border-radius: 15px;
+    color: #FAEDF0;
+    cursor: pointer;
+}
+
+.map-modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 33%;
+    width: 600px;
+    height: 450px;
+    margin: 0;
+    background-color: #292C6D;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+/* 
+.map-modal.hidden {
+    display: none;
+} */
+
+#map {
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+}
+
+.map-text {
+    margin: 50px 0 0 0;
+    color: #FAEDF0;
+    font-size: 1.5em;
+}
