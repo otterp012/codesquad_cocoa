@@ -2,31 +2,41 @@
 (function() { navigator.geolocation.getCurrentPosition((location) => {
     localStorage.setItem('userLatitude', JSON.stringify(location.coords.latitude));
     localStorage.setItem('userLongitude', JSON.stringify(location.coords.longitude));
-
 }) })();
 
 class Clock {
-    constructor( {template} ){
-        this.template = template;
+
+    constructor( ){
+        this.nowDate;
+        this.lastDate;
     }
 
-    renderDate() {
-        const date = new Date();
-    
-        let year = date.getFullYear();
-        let month = date.getMonth()+1;
-        let day = date.getDate();
+    getDate() {
+        const today = new Date();
+        let year = today.getFullYear();
+        let month = today.getMonth()+1;
+        let day = today.getDate();
+        let lastDay = today.getDate() + 7;
 
         month < 10 ? month = '0' + month : month;
         day < 10 ? day = '0' + day : day;
+        lastDay < 10 ? lastDay = '0' + lastDay : lastDay;
 
-        const nowDate = this.template
-                .replace('first', year)
-                .replace('second', month)
-                .replace('third', day);
-
+        this.nowDate = `${year}-${month}-${day}`;
+        this.lastDate = `${year}-${month}-${lastDay}`;
+    }
+ 
+    renderTodayDate() {
+        this.getDate();
         const $nowDate = document.querySelector('.now-date');
-        $nowDate.textContent = nowDate;
+        $nowDate.textContent = this.nowDate;
+    }
+
+    renderInputDate() {
+        const $dateInput = document.querySelector('.date-input');
+        
+        $dateInput.setAttribute('min', this.nowDate);
+        $dateInput.setAttribute('max', this.lastDate);
     }
 
     renderTime() {
@@ -37,15 +47,10 @@ class Clock {
         let secs = time.getSeconds();
 
         hours < 10 ? '0' + hours : hours;
-        mins < 10 ? '0' + mins : mins;
+        mins < 10 ? mins = '0' + mins : mins;
         secs < 10 ? secs = '0' + secs : secs;
 
-        const nowTime = this.template
-            .replace('first', hours)
-            .replace('second', mins)
-            .replace('third', secs)
-            .replaceAll('-', ':');
-
+        const nowTime = `${hours}:${mins}:${secs}`
         const $nowTime = document.querySelector('.now-time');
         $nowTime.textContent = nowTime;
     }
@@ -60,32 +65,41 @@ class Clock {
     }
 
     init() {
-        this.renderDate();
+        this.renderTodayDate();
+        this.renderInputDate();
         this.TimeStart();
     }
 }
 
-let clock = new Clock( {template: 'first-second-third'});
+let clock = new Clock();
 clock.init();
 
-class OpenWeatherAPI {
+
+class WeatherGenerator {
 
     constructor() {
         this.latitude = localStorage.getItem('userLatitude') || null;
         this.longitude = localStorage.getItem('userLongitude') || null;
-        this.defaultCity = 'Seoul';
-        this.weatherData = {};
+        this.defaultCoordinate = [37.566826, 126.9786567];
+        this.currentWeatherObj = {};
+        this.futureWeatherArr;
+
+        this.$tittle = document.querySelector('.tittle');
+        this.$nowTemp = document.querySelector('#temp');
+        this.$nowWeather = document.querySelector('#weather');
+        this.inputDate;
+        this.TimeDifference;
     }
 
     setWeatherData() {
         if(this.latitude) {
-            fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=kr&appid=0090be4456653fec0d00bd835c9c526a`)
+            fetch(`https://api.openweathermap.org/data/2.5/onecall?&units=metric&lat=${this.latitude}&lon=${this.longitude}&exclude=minutely,hourly,alerts&appid=27eb1c068eb0f3b8c0e87520674751e4`)
                 .then((res) => { return res.json(); })
                 .then((res) => {
                     localStorage.setItem('weatherData', JSON.stringify(res));
                 })
         } else {
-            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${this.defaultCity}&units=metric&lang=kr&appid=0090be4456653fec0d00bd835c9c526a`)
+            fetch(`https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=${(this.defaultCoordinate)[0]}&lon=${(this.defaultCoordinate)[1]}&exclude=minutely,hourly,alerts&appid=27eb1c068eb0f3b8c0e87520674751e4`)
                 .then((res) => { return res.json(); })
                 .then((res) => {
                     localStorage.setItem('weatherData', JSON.stringify(res))
@@ -93,81 +107,132 @@ class OpenWeatherAPI {
         }
     }
 
-    getWeatherData() {
+    getCurrentWeatherData() {
         this.setWeatherData();
 
-        const todayWeatherData = JSON.parse(localStorage.getItem('weatherData'));
-        this.weatherData.temp = todayWeatherData.main.temp;
-        this.weatherData.weather = todayWeatherData.weather[0].main;
+        const currentWeatherData = JSON.parse(localStorage.getItem('weatherData'))['current'];
+
+        this.currentWeatherObj.temp = currentWeatherData.temp;
+        this.currentWeatherObj.weather = currentWeatherData.weather[0].main;
     }
 
-    renderTodayWeather() {
-        this.getWeatherData();
+    renderCurrentWeather() {
+        this.getCurrentWeatherData()
+    
+        this.$nowTemp.textContent = `${this.currentWeatherObj.temp}℃`;
+        this.$nowWeather.textContent = this.currentWeatherObj.weather;
+        this.$tittle.textContent = `NOW OUTER`;
+        document.querySelector('.date-container').classList.remove('hidden');
+    }
 
-        const $nowWeather = document.querySelectorAll('.today-weather-text');
-        $nowWeather.forEach((node, index) => {
-            node.textContent = Object.values(this.weatherData)[index] + node.textContent;
+    getFutureWeatherData() {
+
+        const funtureWeatherData = JSON.parse(localStorage.getItem('weatherData'));
+        this.futureWeatherArr = new Array(8).fill(null);
+    
+        this.futureWeatherArr.forEach((item, index) => {
+            if(index > 0) {
+                this.futureWeatherArr[index-1] = [funtureWeatherData.daily[index].temp.day, funtureWeatherData.daily[index].weather[0].main];
+            }
+        })
+        this.futureWeatherArr.pop();
+    }
+
+    renderFutureWeatherData(num) {
+    
+        this.$nowTemp.textContent = `${this.futureWeatherArr[num-1][0]}℃`;
+        this.$nowWeather.textContent = this.futureWeatherArr[num-1][1];
+        this.$tittle.textContent = document.querySelector('.date-input').value;
+        document.querySelector('.date-container').classList.add('hidden');
+    }
+
+    renderWeatherData() {
+        this.getFutureWeatherData();
+        const $dateInput = document.querySelector('.date-input');
+        const $dateChangeButton = document.querySelector('.date-change-button');
+        $dateChangeButton.addEventListener(('click'), () => {
+            this.inputDate = $dateInput.value;
+            const endDay = new Date(this.inputDate);
+            const startDay = new Date();
+
+            this.TimeDifference = Math.ceil((endDay.getTime() - startDay.getTime()) / (1000 * 60 * 60 * 24));
+            if(this.TimeDifference === -0) this.renderCurrentWeather();
+            else this.renderFutureWeatherData(this.TimeDifference);
         })
     }
 }
 
-const weather = new OpenWeatherAPI();
-weather.renderTodayWeather();
+const weather = new WeatherGenerator();
+weather.renderCurrentWeather();
+weather.renderWeatherData();
 
 class Recommend {
     constructor() {
-        this.temp = document.querySelector('#main-temp-text').textContent;
-        this.outer = "";
-    }
-    determineOuter() {
-        const nowTemp = parseFloat(this.temp);
-
-        if( nowTemp >= 15 ) return '1';
-        else if( nowTemp >= 10 && nowTemp < 15 ) return '2';
-        else if( nowTemp > 5 && nowTemp < 10) return '3';
-        else if( nowTemp > 0 && nowTemp <= 5) return '4';
-        else if( nowTemp <= 0) return '5';
-        
-    }
-    
-    renderOuter() {
-        const outerImage = document.createElement('img');
-        document.querySelector('.recommend-container').appendChild(outerImage);
-        outerImage.setAttribute('class', 'outer-image');
-
-        const weatherNum = this.determineOuter();
-    
-        const clothes = {
-            'paka' : `https://cdn-icons.flaticon.com/png/512/1926/premium/1926409.png?token=exp=1638337847~hmac=3b30fa08da562ecbd44edda00215714a`,
-            'coat' : `https://cdn-icons.flaticon.com/png/512/1681/premium/1681991.png?token=exp=1638337749~hmac=e29f7797663c65411574182bd01f3ac8`,
-            'fleece' : `https://cdn-icons-png.flaticon.com/512/3126/3126039.png`,
+        this.outerImage = document.querySelector('.outer-image');
+        this.clothes = {
+            'paka' : `paka.png`,
+            'coat' : `coat.png`,
             'sweat': `https://as2.ftcdn.net/v2/jpg/02/28/21/31/1000_F_228213120_wNhUQMulV62tpCsx4BgfhMM4ceqE4NGr.jpg`,
             'cardigan': `https://cdn-icons-png.flaticon.com/512/3893/3893062.png`
         }
+    }
+    determineNum(temp) {
 
-        switch(+weatherNum) {
-            case 1: 
-            outerImage.setAttribute('src', clothes.sweat);
+        if( temp > 15 ) return 'sweat';
+        else if( temp > 10 && temp <= 15) return 'cardigan';
+        else if( temp > 5 && temp <= 10) return 'coat';
+        else if( temp <= 5) return 'paka';
+    }
+
+    determineOuter(string) {
+        switch(string) {
+            case 'paka': 
+            this.outerImage.setAttribute('src', this.clothes['paka']);
             break;
-            case 2: 
-            outerImage.setAttribute('src', clothes.cardigan);
+            case 'coat': 
+            this.outerImage.setAttribute('src', this.clothes['coat']);
             break;
-            case 3: 
-            outerImage.setAttribute('src', clothes.fleece);
+            case 'cardigan': 
+            this.outerImage.setAttribute('src', this.clothes['cardigan']);
             break;
-            case 4: 
-            outerImage.setAttribute('src', clothes.coat);
+            case 'sweat': 
+            this.outerImage.setAttribute('src', this.clothes['sweat']);
             break;
-            case 5: 
-            outerImage.setAttribute('src', clothes.paka);
-            break;
-        }
+            }
+    }
+    
+    renderCurrentOuter() {
+        const nowTemp = parseInt(document.querySelector('#temp').textContent);
+        this.determineOuter(this.determineNum(nowTemp));
+    }
+
+    renderFutureOuter() {
+        const futureTemp = parseInt(document.querySelector('#temp').textContent);
+        this.determineOuter(this.determineNum(futureTemp));
+    }
+
+    renderOuter() {
+        const $dateInput = document.querySelector('.date-input');
+        const $dateChangeButton = document.querySelector('.date-change-button');
+        $dateChangeButton.addEventListener(('click'), () => {
+            this.inputDate = $dateInput.value;
+            const endDay = new Date(this.inputDate);
+            const startDay = new Date();
+
+            this.TimeDifference = Math.ceil((endDay.getTime() - startDay.getTime()) / (1000 * 60 * 60 * 24));
+            if(this.TimeDifference === -0) this.renderCurrentOuter();
+            else this.renderFutureOuter();
+        })
     }
 }
+
+
+
 let exp = new Recommend();
+exp.renderCurrentOuter();
 exp.renderOuter();
 
-class KakaoMapAPI {
+class MapGenerator {
     constructor() {
         this.latitude = localStorage.getItem('userLatitude') || null;
         this.longitude = localStorage.getItem('userLongitude') || null;
@@ -207,5 +272,5 @@ class KakaoMapAPI {
     }
 }
 
-let kakaoma = new KakaoMapAPI();
+let kakaoma = new MapGenerator();
 kakaoma.renderMapText();

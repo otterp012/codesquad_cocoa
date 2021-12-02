@@ -36,6 +36,9 @@ body {
     color: #161853;
 }
 
+.date-container.hidden {
+    display: none;
+}
 .now-date {
     margin: 0px 5px 0px 0px;
     padding: 0;
@@ -93,6 +96,23 @@ body {
     cursor: pointer;
 }
 
+.button-container .date-change-button {
+    width: 15%;
+    height: 50px;
+    border: none;
+    background-color: #FAEDF0;
+    font-style: italic;
+    font-size: 1.5em;
+    color: #292C6D;
+}
+
+.button-container .date-change-button:focus {
+    background-color: #292C6D;
+    border-radius: 15px;
+    color: #FAEDF0;
+    cursor: pointer;
+}
+
 .map-modal {
     position: absolute;
     display: flex;
@@ -107,10 +127,10 @@ body {
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-/* 
+
 .map-modal.hidden {
     display: none;
-} */
+}
 
 #map {
     width: 300px;
