@@ -1,4 +1,3 @@
-
 export default class OuterRecommender {
     constructor() {
         this.outerImage = document.querySelector('.outer-image');
