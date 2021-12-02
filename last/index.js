@@ -270,7 +270,19 @@ class MapGenerator {
     };
         geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     }
+
+    rederMapModal() {
+        const $identifyLocationButton = document.querySelector('.identify-location-button');
+        const $mapModal = document.querySelector('.map-modal');
+        $identifyLocationButton.addEventListener('click', () => {
+            if($mapModal.classList.contains('hidden')) {
+                $mapModal.classList.remove('hidden');
+                this.renderMapText();
+            } 
+            else $mapModal.classList.add('hidden');
+        })
+    }
 }
 
 let kakaoma = new MapGenerator();
-kakaoma.renderMapText();
+kakaoma.rederMapModal();
