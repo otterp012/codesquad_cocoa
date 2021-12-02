@@ -30,7 +30,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 0  0 0;
+    margin: 0;
     font-size: 1.1em;
     font-weight: 600;
     color: #161853;
@@ -119,7 +119,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    top: 33%;
+    top: 30%;
     width: 600px;
     height: 450px;
     margin: 0;
