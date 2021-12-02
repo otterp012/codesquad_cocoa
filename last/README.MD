@@ -1,5 +1,5 @@
 # Weathor Generator
-[데모페이지](https://otterp012.github.io/pages/WeatherGenerator/index.html/)
+[데모페이지](https://otterp012.github.io/pages/WeatherGenerator/)
 ## 주요 기능
 - 위치정보 제공에 동의한 사용자들의 위치정보 수집.    
 - 위치정보를 기반으로, 1주일 뒤까지의 날씨정보 제공.  
